@@ -5,7 +5,9 @@
 ## Quick repository snapshot ✅
 - Repo name: `Downonthecorner` (owner: `iceman2026`)
 - Default branch: `main` (current branch: `main`)
-- Current contents: single `README.md` at project root; no detected build, test, or CI configuration files.
+- Current contents: `README.md`, `index.html` (Unsplash demo), `package.json` (dev deps), and `.github/workflows/ci.yml` (HTML validation).
+
+- Note: avoid committing local virtual environments (e.g., `.venv`) — this repo intentionally ignores `.venv` via `.gitignore`.
 
 ## What I expect to find / check first (do this automatically) 🔎
 - Search for language/runtime and workflow files: `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, `setup.py`, `Makefile`.
