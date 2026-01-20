@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Downonthecorner — Unsplash demo</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;max-width:900px;margin:2rem auto;padding:0 1rem;color:#222}
+    header{display:flex;align-items:center;justify-content:space-between}
+    button{margin:.25rem}
+    img{display:block;max-width:100%;height:auto;border:1px solid #eaeaea;margin-top:1rem}
+    figcaption{font-size:.9rem;color:#666}
+    .controls{margin-top:1rem}
+    input[type=text]{width:60%}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Downonthecorner — Unsplash demo</h1>
+  </header>
+
+  <p>
+    This small demo shows how to use images from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> and how to swap to a company-provided image URL ("alldata") via the client side. Use the controls below to load images.
+  </p>
+
+  <div class="controls">
+    <button id="unsplashBtn">Random Unsplash</button>
+    <button id="reloadBtn">Reload</button>
+    <input id="aldataUrl" type="text" placeholder="ALDATA image URL (e.g. https://images.example.com/photo.jpg)" />
+    <button id="aldataBtn">Use ALDATA</button>
+  </div>
+
+  <figure>
+    <img id="hero" alt="Demo image" />
+    <figcaption>Images from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>. Please follow Unsplash's <a href="https://unsplash.com/license" target="_blank" rel="noopener">license and attribution</a>.</figcaption>
+  </figure>
+
+  <script>
+    const hero = document.getElementById('hero');
+    const unsplashBtn = document.getElementById('unsplashBtn');
+    const reloadBtn = document.getElementById('reloadBtn');
+    const aldataBtn = document.getElementById('aldataBtn');
+    const aldataUrl = document.getElementById('aldataUrl');
+
+    function loadUnsplash() {
+      // source.unsplash.com provides simple no-auth random images
+      // add a timestamp query to avoid caching in some environments
+      hero.src = 'https://source.unsplash.com/random/1200x800?sig=' + Date.now();
+      hero.alt = 'Random Unsplash image';
+    }
+
+    function loadAlldata() {
+      const url = aldataUrl.value.trim();
+      if (!url) { return alert('Please enter an ALDATA image URL'); }
+      hero.src = url;
+      hero.alt = 'Image from ALDATA';
+    }
+
+    unsplashBtn.addEventListener('click', loadUnsplash);
+    reloadBtn.addEventListener('click', () => {
+      // If current src is an Unsplash source, reload with new sig
+      if (hero.src && hero.src.includes('source.unsplash.com')) {
+        loadUnsplash();
+      } else if (hero.src) {
+        // Force reload by appending timestamp param
+        hero.src = hero.src + (hero.src.includes('?') ? '&' : '?') + 'r=' + Date.now();
+      }
+    });
+    aldataBtn.addEventListener('click', loadAlldata);
+
+    // initial load
+    loadUnsplash();
+  </script>
+</body>
+</html>
